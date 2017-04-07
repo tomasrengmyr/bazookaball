@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class characterController : MonoBehaviour {
+	public static characterController instance;
 	//Explosion
 	public float radius = 5.0F;
 	public float power = 10.0F;
@@ -21,12 +22,17 @@ public class characterController : MonoBehaviour {
 	bool onGround = true;
 	bool canDoubleJump = false;
 
+	private bool MouseDown = false;
+	private float MouseDownFirstTime;
 
-
-	private float privatePower = 5;
+	private float LoadPower = 0;
 	// Use this for initialization
+
+
+
 	void Start () {
 		Cursor.lockState = CursorLockMode.Locked;
+		instance = this;
 	}
 	
 	// Update is called once per frame
@@ -66,22 +72,29 @@ public class characterController : MonoBehaviour {
 		}
 
 
-		/*if (Input.GetMouseButton (0)) {
-			
-			for (int i = 1; i <= 50; i++) {
-				if(Bullet_Forward_Force_Time < Bullet_maxspeed){
+		//När man trycker ner skjut knappen
+		if (Input.GetMouseButton (0)) {
 
+			//kollar så det är första rundan
+			if (!MouseDown) {
+				MouseDownFirstTime = Time.realtimeSinceStartup;
 
-					Bullet_Forward_Force_Time += Bullet_multi;
-					//Debug.Log (Bullet_Forward_Force_Time);
-				}
 			}
-		}*/
 
+			MouseDown = true;
+			
+		}
+
+		if (MouseDown) {
+			if(LoadPower <3)
+				LoadPower = Time.realtimeSinceStartup - MouseDownFirstTime;
+		}
 
 		//Shoot code
 		if (Input.GetMouseButtonUp(0))
 		{
+			MouseDown = false;
+			Debug.Log ("TIME POWER " + LoadPower);
 			//The Bullet instantiation happens here.
 			GameObject Temporary_Bullet_Handler;
 			Temporary_Bullet_Handler = Instantiate(Bullet,Bullet_Emitter.transform.position,Bullet_Emitter.transform.rotation) as GameObject;
@@ -127,11 +140,15 @@ public class characterController : MonoBehaviour {
 
 	}
 
-	public static class GlobalVariables{
+	public float GetLoadPower(){
 
-		public static float power = 5;
+		return LoadPower;
 	}
 
-
+	public void SetLoadPower(float _loadPower){
+		
+		LoadPower = _loadPower;
+		
+	}
 
 }

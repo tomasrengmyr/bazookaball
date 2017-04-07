@@ -35,7 +35,7 @@ public class BulletHitDitection : MonoBehaviour {
 		}
 		if (collision.relativeVelocity.magnitude > 2) {
 			Debug.Log ("BOOM!  " + MainGameManager.instance.ShowScore());
-
+			Debug.Log ("POWER in bullet!  " + characterController.instance.GetLoadPower());
 			//talk to global game manager
 			MainGameManager.instance.AdjustScore (1);
 
@@ -46,7 +46,7 @@ public class BulletHitDitection : MonoBehaviour {
 			{
 				Rigidbody rb = hit.GetComponent<Rigidbody>();
 				if (rb != null)
-					rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
+					rb.AddExplosionForce(power * characterController.instance.GetLoadPower(), explosionPos, radius, 3.0F);
 
 			}
 			Rigidbody thisrb = this.GetComponent<Rigidbody>();
@@ -61,6 +61,7 @@ public class BulletHitDitection : MonoBehaviour {
 		
 		var exp = GetComponent<ParticleSystem>();
 		exp.Play();
+		characterController.instance.SetLoadPower (0);
 		Destroy(gameObject, exp.duration);
 	}
 }
