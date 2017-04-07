@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class characterController : MonoBehaviour {
 	public static characterController instance;
@@ -26,6 +27,9 @@ public class characterController : MonoBehaviour {
 	private float MouseDownFirstTime;
 
 	private float LoadPower = 0;
+
+	public Text PowerText;
+
 	// Use this for initialization
 
 
@@ -33,6 +37,7 @@ public class characterController : MonoBehaviour {
 	void Start () {
 		Cursor.lockState = CursorLockMode.Locked;
 		instance = this;
+		SetPowerText ();
 	}
 	
 	// Update is called once per frame
@@ -84,10 +89,13 @@ public class characterController : MonoBehaviour {
 			MouseDown = true;
 			
 		}
-
 		if (MouseDown) {
-			if(LoadPower <3)
-				LoadPower = Time.realtimeSinceStartup - MouseDownFirstTime;
+			if (LoadPower < 10) {
+
+				SetPowerText ();
+				LoadPower += Time.realtimeSinceStartup - MouseDownFirstTime;
+			}
+				
 		}
 
 		//Shoot code
@@ -138,6 +146,11 @@ public class characterController : MonoBehaviour {
 
 
 
+	}
+
+	void SetPowerText(){
+		PowerText.text = LoadPower.ToString ();
+	
 	}
 
 	public float GetLoadPower(){
