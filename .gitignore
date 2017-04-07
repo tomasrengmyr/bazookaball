@@ -4,6 +4,8 @@
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
+# Mac machine specific files
+.DS_Store
 
 # Visual Studio 2015 cache directory
 /.vs/
