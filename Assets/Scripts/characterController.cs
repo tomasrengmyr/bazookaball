@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class characterController : MonoBehaviour {
-	public static characterController instance;
+public class CharacterController : MonoBehaviour {
+	public static CharacterController instance;
 	//Explosion
 	public float radius = 5.0F;
 	public float power = 10.0F;
@@ -48,34 +48,8 @@ public class characterController : MonoBehaviour {
 		strafe *= Time.deltaTime;
 		transform.Translate (strafe, 0f, translation);
 
-		//Kolla så gubben är på marken så man kan hoppa igen
-		RaycastHit hit;
 
-		Vector3 physicsCenter = this.transform.position + this.GetComponent<CapsuleCollider> ().center;
-
-		Debug.DrawRay(physicsCenter, Vector3.down, Color.red, 1);
-		if (Physics.Raycast (physicsCenter, Vector3.down, out hit, 0.9f)) {
-			if (hit.transform.gameObject.tag != "Player") {
-				onGround = true;
-			}
-		} else {
-			onGround = false;
-		}
-		//Debug.Log (onGround);
-		if(Input.GetKeyDown("escape"))
-			Cursor.lockState = CursorLockMode.None;
-
-
-		//jump code
-		if (Input.GetKeyDown ("space") && !onGround && canDoubleJump) {
-			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
-			canDoubleJump = false;
-		}
-		else if (Input.GetKeyDown ("space") && onGround) {
-			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
-			canDoubleJump = true;
-		}
-
+		MovementUtils.handleDoubleJumpForGameobject (this, "Player", "space", jumpForce);
 
 		//När man trycker ner skjut knappen
 		if (Input.GetMouseButton (0)) {
