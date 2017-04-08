@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class characterController : MonoBehaviour {
-	public static characterController instance;
+public class Player2Controller : MonoBehaviour {
+	public static Player2Controller instance;
 	//Explosion
 	public float radius = 5.0F;
 	public float power = 10.0F;
@@ -36,24 +36,24 @@ public class characterController : MonoBehaviour {
 	void Awake () {
 
 		ThisPlayer = this.transform.gameObject;
+		Cursor.lockState = CursorLockMode.Locked;
+		instance = this;
 	}
 
 	void Start () {
-		Cursor.lockState = CursorLockMode.Locked;
-		instance = this;
-		SetPowerText ();
+		
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log ("TYPE: " + ThisPlayer.name);
-
-		//styr player 1
-		float translation = Input.GetAxis("Vertical") * speed;
-		float strafe = Input.GetAxis("Horizontal") * speed;
+		
+		//Debug.Log ("I player 2");
+		float translation = Input.GetAxis("Vertical2") * speed;
+		float strafe = Input.GetAxis("Horizontal2") * speed;
 		translation *= Time.deltaTime;
 		strafe *= Time.deltaTime;
 		transform.Translate (strafe, 0f, translation);
+
 
 		//Kolla så gubben är på marken så man kan hoppa igen
 		RaycastHit hit;
@@ -94,17 +94,16 @@ public class characterController : MonoBehaviour {
 				}
 
 				MouseDown = true;
-			
+
 			}
 			if (MouseDown) {
 				if (LoadPower < 10) {
 
-					SetPowerText ();
 					LoadPower += Time.realtimeSinceStartup - MouseDownFirstTime;
 				}
-				
+
 			}
-		
+
 
 			//När man släpper skjut knappen
 
@@ -124,24 +123,16 @@ public class characterController : MonoBehaviour {
 				Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
 
 				//Tell the bullet to be "pushed" forward by an amount set by Bullet_Forward_Force.
-				//Temporary_RigidBody.AddForce(Camera.main.transform.forward * (Bullet_Forward_Force + Bullet_Forward_Force_Time));
-				Temporary_RigidBody.AddForce (Camera.main.transform.forward * Bullet_Forward_Force);
-				//Temporary_RigidBody.AddForce(transform.up * (Bullet_Forward_Force + Bullet_Forward_Force_Time)/Bullet_updivider);
-				Bullet_Forward_Force_Time = 0;
+				Temporary_RigidBody.AddForce (Camera.current.transform.forward * Bullet_Forward_Force);
 				//Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
 				Destroy (Temporary_Bullet_Handler, 10.0f);
-				
+
 			}
 		
-		
 
 
 
-	}
 
-	void SetPowerText(){
-		PowerText.text = LoadPower.ToString ();
-	
 	}
 
 	public float GetLoadPower(){
@@ -150,9 +141,9 @@ public class characterController : MonoBehaviour {
 	}
 
 	public void SetLoadPower(float _loadPower){
-		
+
 		LoadPower = _loadPower;
-		
+
 	}
 
 }

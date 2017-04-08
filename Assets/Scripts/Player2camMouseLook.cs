@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class camMouseLook : MonoBehaviour {
-	
+public class Player2camMouseLook : MonoBehaviour {
+
 	Vector2 mouseLook;
 	Vector2 smoothV;
 	public float sensitivity;
@@ -14,11 +14,14 @@ public class camMouseLook : MonoBehaviour {
 	void Start () {
 		character = this.transform.parent.gameObject;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		//Debug.Log ("TYPE: " + character.name);
-			var md = new Vector2 (Input.GetAxisRaw ("Mouse X"), Input.GetAxisRaw ("Mouse Y"));
+
+
+
+			var md = new Vector2 (Input.GetAxisRaw ("Joystick X"), Input.GetAxisRaw ("Joystick Y"));
 			md = Vector2.Scale (md, new Vector2 (sensitivity * smoothing, sensitivity * smoothing));
 			smoothV.x = Mathf.Lerp (smoothV.x, md.x, 1f / smoothing);
 			smoothV.y = Mathf.Lerp (smoothV.y, md.y, 1f / smoothing);
@@ -26,7 +29,6 @@ public class camMouseLook : MonoBehaviour {
 
 			transform.localRotation = Quaternion.AngleAxis (-mouseLook.y, Vector3.right);
 			character.transform.localRotation = Quaternion.AngleAxis (mouseLook.x, character.transform.up);
-
 
 	}
 }
