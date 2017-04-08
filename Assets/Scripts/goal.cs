@@ -13,7 +13,7 @@ public class goal : MonoBehaviour {
 	{
 		if (other.gameObject.CompareTag ("Ball")) {
 			Debug.Log ("GOAL");
-			other.gameObject.SetActive (false);
+			//other.gameObject.SetActive (false);
 		
 			if(this.CompareTag(GOAL_ONE_TAG)){
 				MainGameManager.instance.AdjustPlayer2Score (1);
@@ -22,6 +22,10 @@ public class goal : MonoBehaviour {
 				MainGameManager.instance.AdjustPlayer1Score (1);
 				Debug.Log ("player1 scored");
 			}
+
+			Rigidbody rb = other.GetComponent<Rigidbody>();
+			rb.velocity = Vector3.zero;
+			other.transform.position = new Vector3(10, 10, 10);
 
 		}
 		//update scoretext and continue game
