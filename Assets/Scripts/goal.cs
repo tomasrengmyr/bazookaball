@@ -25,7 +25,7 @@ public class goal : MonoBehaviour {
 
 			Rigidbody rb = other.GetComponent<Rigidbody>();
 			rb.velocity = Vector3.zero;
-			other.transform.position = new Vector3(10, 10, 10);
+			other.transform.position = new Vector3(2, 10, 0);
 
 		}
 		//update scoretext and continue game
