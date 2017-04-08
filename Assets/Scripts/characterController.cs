@@ -29,7 +29,7 @@ public class characterController : MonoBehaviour {
 	private float LoadPower = 0;
 
 	public Text PowerText;
-
+	private GameObject ThisPlayer;
 	// Use this for initialization
 
 
@@ -38,15 +38,31 @@ public class characterController : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 		instance = this;
 		SetPowerText ();
+		ThisPlayer = this.transform.gameObject;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float translation = Input.GetAxis("Vertical") * speed;
-		float strafe = Input.GetAxis("Horizontal") * speed;
-		translation *= Time.deltaTime;
-		strafe *= Time.deltaTime;
-		transform.Translate (strafe, 0f, translation);
+		//Debug.Log ("TYPE: " + ThisPlayer.name);
+
+		//styr player 1
+		if(ThisPlayer.name == "Player1Char"){
+			float translation = Input.GetAxis("Vertical") * speed;
+			float strafe = Input.GetAxis("Horizontal") * speed;
+			translation *= Time.deltaTime;
+			strafe *= Time.deltaTime;
+			transform.Translate (strafe, 0f, translation);
+		}
+
+
+		//Styr player 2
+		if(ThisPlayer.name == "Player2Char"){
+			float translation = Input.GetAxis("Vertical2") * speed;
+			float strafe = Input.GetAxis("Horizontal2") * speed;
+			translation *= Time.deltaTime;
+			strafe *= Time.deltaTime;
+			transform.Translate (strafe, 0f, translation);
+		}
 
 		//Kolla så gubben är på marken så man kan hoppa igen
 		RaycastHit hit;
@@ -98,7 +114,7 @@ public class characterController : MonoBehaviour {
 				
 		}
 
-		//Shoot code
+		//När man släpper skjut knappen
 		if (Input.GetMouseButtonUp(0))
 		{
 			MouseDown = false;
