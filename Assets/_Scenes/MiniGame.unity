@@ -700,6 +700,7 @@ GameObject:
   - component: {fileID: 1017908208}
   - component: {fileID: 1017908207}
   - component: {fileID: 1017908211}
+  - component: {fileID: 1017908212}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -786,6 +787,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1017908212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1017908206}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec16823ff4bb4f53a716d6b4ccbb59c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1063903807
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,7 +1070,7 @@ GameObject:
   - component: {fileID: 1351839334}
   - component: {fileID: 1351839333}
   m_Layer: 0
-  m_Name: East wall
+  m_Name: Goal 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1348,7 +1360,7 @@ GameObject:
   - component: {fileID: 1949250008}
   - component: {fileID: 1949250007}
   m_Layer: 0
-  m_Name: West wall
+  m_Name: Goal 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

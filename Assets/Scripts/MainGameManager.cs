@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class MainGameManager : MonoBehaviour {
 	public static MainGameManager instance;
-	private int _currentScore;
+	private int _Player1Score;
+	private int _Player2Score;
 
 	void Awake (){
 		instance = this;
 	}
 
-	public void AdjustScore (int num){
+	public void AdjustPlayer1Score (int num){
 	
-		_currentScore += num;
+		_Player1Score += num;
 	}
 
-	public int ShowScore (){
-		return _currentScore;
+	public void AdjustPlayer2Score (int num){
+
+		_Player2Score += num;
+	}
+
+	public int ShowPlayer1Score (){
+		return _Player1Score;
+	}
+
+	public int ShowPlayer2Score (){
+		return _Player2Score;
 	}
 
 	void OnGUI(){
-		GUI.Label (new Rect (10, 10, 100, 100), "Score= " + _currentScore);
-	
+		GUI.contentColor = Color.black;
+		GUI.Label (new Rect (10, 10, 100, 200), "Player 1 score= " + _Player1Score);
+		GUI.Label (new Rect (10, 50, 100, 200), "Player 2 score= " + _Player2Score);
 	}
 }

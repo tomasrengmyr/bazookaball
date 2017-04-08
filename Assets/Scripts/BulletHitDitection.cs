@@ -29,15 +29,15 @@ public class BulletHitDitection : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
+		//Debug.Log ("collision ID: " + collision.gameObject.name);
 		foreach (ContactPoint contact in collision.contacts)
 		{
 			Debug.DrawRay(contact.point, contact.normal, Color.white);
 		}
 		if (collision.relativeVelocity.magnitude > 2) {
-			Debug.Log ("BOOM!  " + MainGameManager.instance.ShowScore());
-			Debug.Log ("POWER in bullet!  " + characterController.instance.GetLoadPower());
+			//Debug.Log ("POWER in bullet!  " + characterController.instance.GetLoadPower());
 			//talk to global game manager
-			MainGameManager.instance.AdjustScore (1);
+			//MainGameManager.instance.AdjustScore (1);
 
 
 			Vector3 explosionPos = transform.position;
