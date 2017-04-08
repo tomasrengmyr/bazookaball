@@ -46,7 +46,7 @@ public class BulletHitDitection : MonoBehaviour {
 			{
 				Rigidbody rb = hit.GetComponent<Rigidbody>();
 				if (rb != null)
-					rb.AddExplosionForce(power * characterController.instance.GetLoadPower(), explosionPos, radius, 3.0F);
+					rb.AddExplosionForce(power * CharacterController.instance.GetLoadPower(), explosionPos, radius, 3.0F);
 
 			}
 			Rigidbody thisrb = this.GetComponent<Rigidbody>();
@@ -61,7 +61,7 @@ public class BulletHitDitection : MonoBehaviour {
 		
 		var exp = GetComponent<ParticleSystem>();
 		exp.Play();
-		characterController.instance.SetLoadPower (0);
+		CharacterController.instance.SetLoadPower (0);
 		Destroy(gameObject, exp.duration);
 	}
 }
