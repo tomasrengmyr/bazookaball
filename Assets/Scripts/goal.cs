@@ -14,11 +14,15 @@ public class goal : MonoBehaviour {
 		if (other.gameObject.CompareTag ("Ball")) {
 			Debug.Log ("GOAL");
 			other.gameObject.SetActive (false);
-		}
-		if(this.CompareTag(GOAL_ONE_TAG)){
-			Debug.Log ("player2 scored");
-		} else if(this.CompareTag(GOAL_TWO_TAG)){
-			Debug.Log ("player1 scored");
+		
+			if(this.CompareTag(GOAL_ONE_TAG)){
+				MainGameManager.instance.AdjustPlayer2Score (1);
+				Debug.Log ("player2 scored");
+			} else if(this.CompareTag(GOAL_TWO_TAG)){
+				MainGameManager.instance.AdjustPlayer1Score (1);
+				Debug.Log ("player1 scored");
+			}
+
 		}
 		//update scoretext and continue game
 	}
