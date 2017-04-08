@@ -1,28 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class goal : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+/*
+ * GOAL_ONE_TAG should be set on all goals that the player1 protects and GOAL_TWO_TAG on all goals playerone wants to hit
+ */ 
+
+	public static string GOAL_ONE_TAG = "Goal1";
+	public static string GOAL_TWO_TAG = "Goal2";
 
 	void OnTriggerEnter(Collider other) 
 	{
 		if (other.gameObject.CompareTag ("Ball")) {
 			Debug.Log ("GOAL");
 			other.gameObject.SetActive (false);
-
-		} else {
-			Debug.Log ("GOAL tag was not ball");
 		}
+		if(this.CompareTag(GOAL_ONE_TAG)){
+			Debug.Log ("player2 scored");
+		} else if(this.CompareTag(GOAL_TWO_TAG)){
+			Debug.Log ("player1 scored");
+		}
+		//update scoretext and continue game
 	}
 
 }
