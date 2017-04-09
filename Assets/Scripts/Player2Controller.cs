@@ -69,23 +69,23 @@ public class Player2Controller : MonoBehaviour {
 			onGround = false;
 		}
 		//Debug.Log (onGround);
-		if(Input.GetKeyDown("escape"))
+		if(Input.GetButtonDown("Cancel"))
 			Cursor.lockState = CursorLockMode.None;
 
 
 		//jump code
-		if (Input.GetKeyDown ("space") && !onGround && canDoubleJump) {
+		if (Input.GetButtonDown ("Jump") && !onGround && canDoubleJump) {
 			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
 			canDoubleJump = false;
 		}
-		else if (Input.GetKeyDown ("space") && onGround) {
+		else if (Input.GetButtonDown ("Jump") && onGround) {
 			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
 			canDoubleJump = true;
 		}
 
 
 		//När man trycker ner skjut knappen
-			if (Input.GetMouseButton (0)) {
+		if (Input.GetButtonDown("Fire1")) {
 
 				//kollar så det är första rundan
 				if (!MouseDown) {
@@ -107,7 +107,7 @@ public class Player2Controller : MonoBehaviour {
 
 			//När man släpper skjut knappen
 
-			if (Input.GetMouseButtonUp (0)) {
+			if (Input.GetButtonUp ("Fire1")) {
 				MouseDown = false;
 				Debug.Log ("TIME POWER " + LoadPower);
 				//The Bullet instantiation happens here.
