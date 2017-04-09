@@ -4,31 +4,17 @@ using UnityEngine;
 
 public class BulletHitDitection : MonoBehaviour {
 
-	//Explosion
+	//Explosion properties
 	public float radius = 5.0F;
 	public float power = 10.0F;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
 
 	void OnCollisionEnter(Collision collision)
 	{
-		//Debug.Log ("collision ID: " + collision.gameObject.name);
 		foreach (ContactPoint contact in collision.contacts)
 		{
 			Debug.DrawRay(contact.point, contact.normal, Color.white);
 		}
 		if (collision.relativeVelocity.magnitude > 2) {
-			//Debug.Log ("POWER in bullet!  " + characterController.instance.GetLoadPower());
-			//talk to global game manager
-			//MainGameManager.instance.AdjustScore (1);
-
-
 			Vector3 explosionPos = transform.position;
 			Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
 			foreach (Collider hit in colliders)
@@ -41,13 +27,10 @@ public class BulletHitDitection : MonoBehaviour {
 			Rigidbody thisrb = this.GetComponent<Rigidbody>();
 			thisrb.isKinematic = true;
 			Explode();
-			//Destroy(gameObject);
 		}
-			
 	}
 
 	void Explode() {
-		
 		var exp = GetComponent<ParticleSystem>();
 		exp.Play();
 		characterController.instance.SetLoadPower (0);
