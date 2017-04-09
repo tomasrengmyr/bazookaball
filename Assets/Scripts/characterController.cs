@@ -69,7 +69,7 @@ public class characterController : MonoBehaviour {
 			onGround = false;
 		}
 		//Debug.Log (onGround);
-		if(Input.GetKeyDown("Cancel"))
+		if(Input.GetButtonDown("Cancel"))
 			Cursor.lockState = CursorLockMode.None;
 
 
