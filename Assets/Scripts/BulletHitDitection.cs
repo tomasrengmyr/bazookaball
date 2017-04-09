@@ -11,8 +11,10 @@ public class BulletHitDitection : MonoBehaviour {
 	public float radius = 5.0F;
 	public float power = 10.0F;
 	// Use this for initialization
-	void Start () {
-		
+	Rigidbody bulletRigidBody;
+
+	void Awake () {
+		bulletRigidBody = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
@@ -49,8 +51,7 @@ public class BulletHitDitection : MonoBehaviour {
 					rb.AddExplosionForce(power * characterController.instance.GetLoadPower(), explosionPos, radius, 3.0F);
 
 			}
-			Rigidbody thisrb = this.GetComponent<Rigidbody>();
-			thisrb.isKinematic = true;
+			bulletRigidBody.isKinematic = true;
 			Explode();
 			//Destroy(gameObject);
 		}
