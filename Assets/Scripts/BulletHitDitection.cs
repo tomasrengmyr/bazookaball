@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletHitDitection : MonoBehaviour {
-	private Vector3 lastPosition;
-	private Vector3 newPosition;
 
 	//Explosion
 	public float radius = 5.0F;
@@ -16,8 +14,6 @@ public class BulletHitDitection : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		newPosition = this.transform.position;
-		lastPosition = newPosition;
 	}
 
 	void OnCollisionEnter(Collision collision)
