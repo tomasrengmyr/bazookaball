@@ -30,12 +30,14 @@ public class characterController : MonoBehaviour {
 
 	public Text PowerText;
 	private GameObject ThisPlayer;
-	// Use this for initialization
+	private CapsuleCollider capsuleCollider;
+	private Rigidbody rigidBody;
 
 
 	void Awake () {
-
 		ThisPlayer = this.transform.gameObject;
+		capsuleCollider = this.GetComponent<CapsuleCollider> ();
+		rigidBody = this.GetComponent<Rigidbody> ();
 	}
 
 	void Start () {
@@ -58,7 +60,7 @@ public class characterController : MonoBehaviour {
 		//Kolla så gubben är på marken så man kan hoppa igen
 		RaycastHit hit;
 
-		Vector3 physicsCenter = this.transform.position + this.GetComponent<CapsuleCollider> ().center;
+		Vector3 physicsCenter = this.transform.position + capsuleCollider.center;
 
 		Debug.DrawRay(physicsCenter, Vector3.down, Color.red, 1);
 		if (Physics.Raycast (physicsCenter, Vector3.down, out hit, 0.9f)) {
@@ -75,11 +77,11 @@ public class characterController : MonoBehaviour {
 
 		//jump code
 		if (Input.GetButtonDown ("Jump") && !onGround && canDoubleJump) {
-			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
+			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = false;
 		}
 		else if (Input.GetButtonDown ("Jump") && onGround) {
-			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
+			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = true;
 		}
 		
