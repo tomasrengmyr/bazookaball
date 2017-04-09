@@ -55,6 +55,6 @@ public class BulletHitDitection : MonoBehaviour {
 		var exp = GetComponent<ParticleSystem>();
 		exp.Play();
 		characterController.instance.SetLoadPower (0);
-		Destroy(gameObject, exp.duration);
+		Destroy(gameObject, exp.main.duration);
 	}
 }
