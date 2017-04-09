@@ -12,7 +12,6 @@ public class MainGameManager : MonoBehaviour {
 	}
 
 	public void AdjustPlayer1Score (int num){
-	
 		_Player1Score += num;
 	}
 

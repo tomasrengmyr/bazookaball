@@ -82,77 +82,62 @@ public class characterController : MonoBehaviour {
 			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
 			canDoubleJump = true;
 		}
-
+		
 
 		//När man trycker ner skjut knappen
-			if (Input.GetMouseButton (0)) {
+		if (Input.GetMouseButton (0)) {
 
-				//kollar så det är första rundan
-				if (!MouseDown) {
-					MouseDownFirstTime = Time.realtimeSinceStartup;
-
-				}
-
-				MouseDown = true;
-			
+			//kollar så det är första rundan
+			if (!MouseDown) {
+				MouseDownFirstTime = Time.realtimeSinceStartup;
 			}
-			if (MouseDown) {
-				if (LoadPower < 10) {
-
-					SetPowerText ();
-					LoadPower += Time.realtimeSinceStartup - MouseDownFirstTime;
-				}
-				
+			MouseDown = true;
+		}
+		if (MouseDown) {
+			if (LoadPower < 10) {
+				SetPowerText ();
+				LoadPower += Time.realtimeSinceStartup - MouseDownFirstTime;
 			}
-		
-
-			//När man släpper skjut knappen
-
-			if (Input.GetMouseButtonUp (0)) {
-				MouseDown = false;
-				Debug.Log ("TIME POWER " + LoadPower);
-				//The Bullet instantiation happens here.
-				GameObject Temporary_Bullet_Handler;
-				Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
-
-				//Sometimes bullets may appear rotated incorrectly due to the way its pivot was set from the original modeling package.
-				//This is EASILY corrected here, you might have to rotate it from a different axis and or angle based on your particular mesh.
-				Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
-
-				//Retrieve the Rigidbody component from the instantiated Bullet and control it.
-				Rigidbody Temporary_RigidBody;
-				Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
-
-				//Tell the bullet to be "pushed" forward by an amount set by Bullet_Forward_Force.
-				//Temporary_RigidBody.AddForce(Camera.main.transform.forward * (Bullet_Forward_Force + Bullet_Forward_Force_Time));
-				Temporary_RigidBody.AddForce (Camera.main.transform.forward * Bullet_Forward_Force);
-				//Temporary_RigidBody.AddForce(transform.up * (Bullet_Forward_Force + Bullet_Forward_Force_Time)/Bullet_updivider);
-				Bullet_Forward_Force_Time = 0;
-				//Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
-				Destroy (Temporary_Bullet_Handler, 10.0f);
-				
-			}
-		
+		}
 		
 
 
+		if (Input.GetMouseButtonUp (0)) {
+			MouseDown = false;
+			Debug.Log ("TIME POWER " + LoadPower);
 
+			//The Bullet instantiation happens here.
+			GameObject Temporary_Bullet_Handler;
+			Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
+
+			//Sometimes bullets may appear rotated incorrectly due to the way its pivot was set from the original modeling package.
+			//This is EASILY corrected here, you might have to rotate it from a different axis and or angle based on your particular mesh.
+			Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
+
+			//Retrieve the Rigidbody component from the instantiated Bullet and control it.
+			Rigidbody Temporary_RigidBody;
+			Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
+
+			//Tell the bullet to be "pushed" forward by an amount set by Bullet_Forward_Force.
+			//Temporary_RigidBody.AddForce(Camera.main.transform.forward * (Bullet_Forward_Force + Bullet_Forward_Force_Time));
+			Temporary_RigidBody.AddForce (Camera.main.transform.forward * Bullet_Forward_Force);
+			//Temporary_RigidBody.AddForce(transform.up * (Bullet_Forward_Force + Bullet_Forward_Force_Time)/Bullet_updivider);
+			Bullet_Forward_Force_Time = 0;
+			//Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
+			Destroy (Temporary_Bullet_Handler, 10.0f);
+		}
 	}
 
 	void SetPowerText(){
 		PowerText.text = LoadPower.ToString ();
-	
 	}
 
 	public float GetLoadPower(){
-
 		return LoadPower;
 	}
 
 	public void SetLoadPower(float _loadPower){
-		
 		LoadPower = _loadPower;
-		
 	}
 
 }
