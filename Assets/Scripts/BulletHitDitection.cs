@@ -5,7 +5,6 @@ using UnityEngine;
 public class BulletHitDitection : MonoBehaviour {
 	private Vector3 lastPosition;
 	private Vector3 newPosition;
-	private Vector3 distance;
 
 	//Explosion
 	public float radius = 5.0F;
@@ -18,12 +17,6 @@ public class BulletHitDitection : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		newPosition = this.transform.position;
-
-		if(lastPosition != null){
-			distance = newPosition - lastPosition;
-
-		}
-		//Debug.Log (distance.magnitude);
 		lastPosition = newPosition;
 	}
 
