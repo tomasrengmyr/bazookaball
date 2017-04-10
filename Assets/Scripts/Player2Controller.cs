@@ -30,7 +30,8 @@ public class Player2Controller : MonoBehaviour {
 
 	public Text PowerText;
 	private GameObject ThisPlayer;
-	// Use this for initialization
+	private CapsuleCollider capsuleCollider;
+	private Rigidbody rigidBody;
 
 
 	void Awake () {
@@ -38,6 +39,8 @@ public class Player2Controller : MonoBehaviour {
 		ThisPlayer = this.transform.gameObject;
 		Cursor.lockState = CursorLockMode.Locked;
 		instance = this;
+		capsuleCollider = this.GetComponent<CapsuleCollider> ();
+		rigidBody = this.GetComponent<Rigidbody> ();
 	}
 
 	void Start () {
@@ -58,7 +61,7 @@ public class Player2Controller : MonoBehaviour {
 		//Kolla så gubben är på marken så man kan hoppa igen
 		RaycastHit hit;
 
-		Vector3 physicsCenter = this.transform.position + this.GetComponent<CapsuleCollider> ().center;
+		Vector3 physicsCenter = this.transform.position + capsuleCollider.center;
 
 		Debug.DrawRay(physicsCenter, Vector3.down, Color.red, 1);
 		if (Physics.Raycast (physicsCenter, Vector3.down, out hit, 0.9f)) {
@@ -75,11 +78,12 @@ public class Player2Controller : MonoBehaviour {
 
 		//jump code
 		if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && !onGround && canDoubleJump) {
-			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
+			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = false;
 		}
 		else if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && onGround) {
-			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
+			rigidBody.AddForce (Vector3.up * jumpForce);
+
 			canDoubleJump = true;
 		}
 
