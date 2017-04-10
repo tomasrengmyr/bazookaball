@@ -7,6 +7,24 @@ public class BulletHitDitection : MonoBehaviour {
 	//Explosion properties
 	public float radius = 5.0F;
 	public float power = 10.0F;
+	// Use this for initialization
+	Rigidbody bulletRigidBody;
+
+	void Awake () {
+		bulletRigidBody = GetComponent<Rigidbody>();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		newPosition = this.transform.position;
+
+		if(lastPosition != null){
+			distance = newPosition - lastPosition;
+
+		}
+		//Debug.Log (distance.magnitude);
+		lastPosition = newPosition;
+	}
 
 	void OnCollisionEnter(Collision collision)
 	{
@@ -24,8 +42,7 @@ public class BulletHitDitection : MonoBehaviour {
 					rb.AddExplosionForce(power * characterController.instance.GetLoadPower(), explosionPos, radius, 3.0F);
 
 			}
-			Rigidbody thisrb = this.GetComponent<Rigidbody>();
-			thisrb.isKinematic = true;
+			bulletRigidBody.isKinematic = true;
 			Explode();
 		}
 	}
