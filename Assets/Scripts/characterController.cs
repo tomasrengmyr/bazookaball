@@ -82,7 +82,7 @@ public class characterController : MonoBehaviour {
 		Vector3 physicsCenter = this.transform.position + capsuleCollider.center;
 
 		Debug.DrawRay(physicsCenter, Vector3.down, Color.red, 1);
-		if (Physics.Raycast (physicsCenter, Vector3.down, out hit, 0.9f)) {
+		if (Physics.Raycast (physicsCenter, Vector3.down, out hit, 1.0f)) {
 			if (hit.transform.gameObject.tag != "Player") {
 				onGround = true;
 			}
