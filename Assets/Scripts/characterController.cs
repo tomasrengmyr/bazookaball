@@ -22,6 +22,9 @@ public class characterController : MonoBehaviour {
 	public float jumpForce;
 
 	public string fireButtonTag;
+	public string jumpButtonTag;
+	public string horizontalTag;
+	public string verticalTag;
 
 	bool onGround = true;
 	bool canDoubleJump = false;
@@ -62,8 +65,8 @@ public class characterController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		float translation = Input.GetAxis("Vertical") * speed;
-		float strafe = Input.GetAxis("Horizontal") * speed;
+		float translation = Input.GetAxis(verticalTag) * speed;
+		float strafe = Input.GetAxis(horizontalTag) * speed;
 		translation *= Time.deltaTime;
 		strafe *= Time.deltaTime;
 		transform.Translate (strafe, 0f, translation);
@@ -86,11 +89,11 @@ public class characterController : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 		//jump code
 
-		if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && !onGround && canDoubleJump) {
+		if (Input.GetButtonDown (jumpButtonTag) && !onGround && canDoubleJump) {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = false;
 		}
-		else if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && onGround) {
+		else if (Input.GetButtonDown (jumpButtonTag) && onGround) {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = true;
 		}
