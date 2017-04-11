@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,23 +9,35 @@ public class characterController : MonoBehaviour {
 	public float radius = 5.0F;
 	public float power = 10.0F;
 
+    // Force thresholds for bullet
+	public int Bullet_Max_Force = 4000;
+	public int Bullet_Min_Force = 1000;
+    public float Bullet_Max_Buffer_ms = 2.5f;
+
 	//Shoot code
 	public GameObject Bullet_Emitter;
 	public GameObject Bullet;
+
+	/*
+	 * This is not used? readd if they are need
 	public int Bullet_Forward_Force;
-	private int Bullet_Forward_Force_Time = 0;
 	public int Bullet_multi = 10;
 	public int Bullet_maxspeed = 3000;
 	public int Bullet_updivider= 10;
-
+	*/
 	public float speed;
 	public float jumpForce;
+
+
 	bool onGround = true;
 	bool canDoubleJump = false;
+
+	private bool isFiringAway = false;
 
 	private bool MouseDown = false;
 	private float MouseDownFirstTime;
 
+	private float LoadTime = 0;
 	private float LoadPower = 0;
 
 	//public Text PowerText;
@@ -45,12 +57,19 @@ public class characterController : MonoBehaviour {
 		instance = this;
 		SetPowerText ();
 	}
-	
+
+	void FixedUpdate () {
+		if (isFiringAway) {
+            isFiringAway = false;
+            float BufferedTime = (LoadTime > Bullet_Max_Buffer_ms ? Bullet_Max_Buffer_ms : LoadTime);
+			float power = (BufferedTime / Bullet_Max_Buffer_ms) * Bullet_Max_Force;
+            power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
+            Shoot(power);
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log ("TYPE: " + ThisPlayer.name);
-
-		//styr player 1
 		float translation = Input.GetAxis("Vertical") * speed;
 		float strafe = Input.GetAxis("Horizontal") * speed;
 		translation *= Time.deltaTime;
@@ -73,8 +92,6 @@ public class characterController : MonoBehaviour {
 		//Debug.Log (onGround);
 		if(Input.GetButtonDown(InputSettings.INPUT_CANCEL))
 			Cursor.lockState = CursorLockMode.None;
-
-
 		//jump code
 
 		if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && !onGround && canDoubleJump) {
@@ -83,54 +100,39 @@ public class characterController : MonoBehaviour {
 		}
 		else if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && onGround) {
 			rigidBody.AddForce (Vector3.up * jumpForce);
-
 			canDoubleJump = true;
 		}
-		
 
-		//När man trycker ner skjut knappen
+
 		if (Input.GetButtonDown(InputSettings.INPUT_FIRE)) {
-
-			//kollar så det är första rundan
 			if (!MouseDown) {
 				MouseDownFirstTime = Time.realtimeSinceStartup;
 			}
 			MouseDown = true;
 		}
 		if (MouseDown) {
-			if (LoadPower < 10) {
-				SetPowerText ();
-				LoadPower += Time.realtimeSinceStartup - MouseDownFirstTime;
-			}
+			// Add animation of power bar for bazooka
+            // SetPowerText ();
+            // LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
 		}
-		
-
 
 		if (Input.GetButtonUp(InputSettings.INPUT_FIRE)) {
 			MouseDown = false;
-			Debug.Log ("TIME POWER " + LoadPower);
-
-			//The Bullet instantiation happens here.
-			GameObject Temporary_Bullet_Handler;
-			Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
-
-			//Sometimes bullets may appear rotated incorrectly due to the way its pivot was set from the original modeling package.
-			//This is EASILY corrected here, you might have to rotate it from a different axis and or angle based on your particular mesh.
-			Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
-
-			//Retrieve the Rigidbody component from the instantiated Bullet and control it.
-			Rigidbody Temporary_RigidBody;
-			Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
-
-			//Tell the bullet to be "pushed" forward by an amount set by Bullet_Forward_Force.
-			//Temporary_RigidBody.AddForce(Camera.main.transform.forward * (Bullet_Forward_Force + Bullet_Forward_Force_Time));
-			Temporary_RigidBody.AddForce (Camera.main.transform.forward * Bullet_Forward_Force);
-			//Temporary_RigidBody.AddForce(transform.up * (Bullet_Forward_Force + Bullet_Forward_Force_Time)/Bullet_updivider);
-			Bullet_Forward_Force_Time = 0;
-			//Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
-			Destroy (Temporary_Bullet_Handler, 10.0f);
+            LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
+            isFiringAway = true;
 		}
 	}
+
+
+    void Shoot (float force) {
+        GameObject Temporary_Bullet_Handler;
+        Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
+        Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
+        Rigidbody Temporary_RigidBody;
+        Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
+		Temporary_RigidBody.AddForce (Camera.main.transform.forward * Mathf.FloorToInt(force));
+        Destroy (Temporary_Bullet_Handler, 10.0f);
+    }
 
 	void SetPowerText(){
 		//PowerText.text = LoadPower.ToString ();
