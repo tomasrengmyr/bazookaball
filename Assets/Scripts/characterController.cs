@@ -21,6 +21,7 @@ public class characterController : MonoBehaviour {
 	public float speed;
 	public float jumpForce;
 
+	public string fireButtonTag;
 
 	bool onGround = true;
 	bool canDoubleJump = false;
@@ -95,7 +96,7 @@ public class characterController : MonoBehaviour {
 		}
 
 
-		if (Input.GetButtonDown(InputSettings.INPUT_FIRE)) {
+		if (Input.GetButtonDown(fireButtonTag)) {
 			if (!MouseDown) {
 				MouseDownFirstTime = Time.realtimeSinceStartup;
 			}
@@ -107,7 +108,7 @@ public class characterController : MonoBehaviour {
             // LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
 		}
 
-		if (Input.GetButtonUp(InputSettings.INPUT_FIRE)) {
+		if (Input.GetButtonUp(fireButtonTag)) {
 			MouseDown = false;
             LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
             isFiringAway = true;
