@@ -18,13 +18,6 @@ public class characterController : MonoBehaviour {
 	public GameObject Bullet_Emitter;
 	public GameObject Bullet;
 
-	/*
-	 * This is not used? readd if they are need
-	public int Bullet_Forward_Force;
-	public int Bullet_multi = 10;
-	public int Bullet_maxspeed = 3000;
-	public int Bullet_updivider= 10;
-	*/
 	public float speed;
 	public float jumpForce;
 
@@ -41,13 +34,11 @@ public class characterController : MonoBehaviour {
 	private float LoadPower = 0;
 
 	//public Text PowerText;
-	private GameObject ThisPlayer;
 	private CapsuleCollider capsuleCollider;
 	private Rigidbody rigidBody;
 
 
 	void Awake () {
-		ThisPlayer = this.transform.gameObject;
 		capsuleCollider = this.GetComponent<CapsuleCollider> ();
 		rigidBody = this.GetComponent<Rigidbody> ();
 	}
