@@ -40,7 +40,7 @@ public class characterController : MonoBehaviour {
 	private float LoadTime = 0;
 	private float LoadPower = 0;
 
-	public Text PowerText;
+	//public Text PowerText;
 	private GameObject ThisPlayer;
 	private CapsuleCollider capsuleCollider;
 	private Rigidbody rigidBody;
@@ -135,7 +135,7 @@ public class characterController : MonoBehaviour {
     }
 
 	void SetPowerText(){
-		PowerText.text = LoadPower.ToString ();
+		//PowerText.text = LoadPower.ToString ();
 	}
 
 	public float GetLoadPower(){
