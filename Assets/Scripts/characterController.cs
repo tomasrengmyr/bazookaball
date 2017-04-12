@@ -19,16 +19,13 @@ public class characterController : MonoBehaviour {
 	public GameObject Bullet;
     public RawImage BazookBar;
 
-	/*
-	 * This is not used? readd if they are need
-	public int Bullet_Forward_Force;
-	public int Bullet_multi = 10;
-	public int Bullet_maxspeed = 3000;
-	public int Bullet_updivider= 10;
-	*/
 	public float speed;
 	public float jumpForce;
 
+	public string fireButtonTag;
+	public string jumpButtonTag;
+	public string horizontalTag;
+	public string verticalTag;
 
 	bool onGround = true;
 	bool canDoubleJump = false;
@@ -42,13 +39,11 @@ public class characterController : MonoBehaviour {
 	private float LoadPower = 0;
 
 	//public Text PowerText;
-	private GameObject ThisPlayer;
 	private CapsuleCollider capsuleCollider;
 	private Rigidbody rigidBody;
 
 
 	void Awake () {
-		ThisPlayer = this.transform.gameObject;
 		capsuleCollider = this.GetComponent<CapsuleCollider> ();
 		rigidBody = this.GetComponent<Rigidbody> ();
 	}
@@ -79,8 +74,8 @@ public class characterController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		float translation = Input.GetAxis("Vertical") * speed;
-		float strafe = Input.GetAxis("Horizontal") * speed;
+		float translation = Input.GetAxis(verticalTag) * speed;
+		float strafe = Input.GetAxis(horizontalTag) * speed;
 		translation *= Time.deltaTime;
 		strafe *= Time.deltaTime;
 		transform.Translate (strafe, 0f, translation);
@@ -91,7 +86,7 @@ public class characterController : MonoBehaviour {
 		Vector3 physicsCenter = this.transform.position + capsuleCollider.center;
 
 		Debug.DrawRay(physicsCenter, Vector3.down, Color.red, 1);
-		if (Physics.Raycast (physicsCenter, Vector3.down, out hit, 0.9f)) {
+		if (Physics.Raycast (physicsCenter, Vector3.down, out hit, 1.0f)) {
 			if (hit.transform.gameObject.tag != "Player") {
 				onGround = true;
 			}
@@ -103,17 +98,17 @@ public class characterController : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 		//jump code
 
-		if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && !onGround && canDoubleJump) {
+		if (Input.GetButtonDown (jumpButtonTag) && !onGround && canDoubleJump) {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = false;
 		}
-		else if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && onGround) {
+		else if (Input.GetButtonDown (jumpButtonTag) && onGround) {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = true;
 		}
 
 
-		if (Input.GetButtonDown(InputSettings.INPUT_FIRE)) {
+		if (Input.GetButtonDown(fireButtonTag)) {
 			if (!MouseDown) {
 				MouseDownFirstTime = Time.realtimeSinceStartup;
 			}
@@ -132,11 +127,12 @@ public class characterController : MonoBehaviour {
 				BazookBar.transform.localPosition.y, 
 				1);
 		}
-		if (Input.GetButtonUp(InputSettings.INPUT_FIRE)) {
+		if (Input.GetButtonUp(fireButtonTag)) {
 			BazookBar.transform.localPosition = new Vector3 (
 				-260, 
 				BazookBar.transform.localPosition.y, 
 				1);
+
 			MouseDown = false;
             LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
             isFiringAway = true;
