@@ -17,6 +17,7 @@ public class characterController : MonoBehaviour {
 	//Shoot code
 	public GameObject Bullet_Emitter;
 	public GameObject Bullet;
+    public RawImage BazookBar;
 
 	public float speed;
 	public float jumpForce;
@@ -62,6 +63,14 @@ public class characterController : MonoBehaviour {
             Shoot(power);
 		}
 	}
+    void OnGUI () {
+		var w = BazookBar.uvRect.width + 2;
+		Rect current = BazookBar.uvRect;
+		if (MouseDown) {
+
+		}
+
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -106,12 +115,24 @@ public class characterController : MonoBehaviour {
 			MouseDown = true;
 		}
 		if (MouseDown) {
-			// Add animation of power bar for bazooka
-            // SetPowerText ();
-            // LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
+			
+			float currentProgress = ((Time.realtimeSinceStartup - MouseDownFirstTime) / Bullet_Max_Buffer_ms);
+			// TODO set these base position values from existing object position. 
+			float currentPosition = -260 + 170;
+			if (currentProgress < 1) {
+				currentPosition = -260f + (170f * currentProgress);
+			}
+			BazookBar.transform.localPosition = new Vector3 (
+				currentPosition, 
+				BazookBar.transform.localPosition.y, 
+				1);
 		}
-
 		if (Input.GetButtonUp(fireButtonTag)) {
+			BazookBar.transform.localPosition = new Vector3 (
+				-260, 
+				BazookBar.transform.localPosition.y, 
+				1);
+
 			MouseDown = false;
             LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
             isFiringAway = true;
