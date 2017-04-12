@@ -18,16 +18,13 @@ public class characterController : MonoBehaviour {
 	public GameObject Bullet_Emitter;
 	public GameObject Bullet;
 
-	/*
-	 * This is not used? readd if they are need
-	public int Bullet_Forward_Force;
-	public int Bullet_multi = 10;
-	public int Bullet_maxspeed = 3000;
-	public int Bullet_updivider= 10;
-	*/
 	public float speed;
 	public float jumpForce;
 
+	public string fireButtonTag;
+	public string jumpButtonTag;
+	public string horizontalTag;
+	public string verticalTag;
 
 	bool onGround = true;
 	bool canDoubleJump = false;
@@ -41,13 +38,11 @@ public class characterController : MonoBehaviour {
 	private float LoadPower = 0;
 
 	//public Text PowerText;
-	private GameObject ThisPlayer;
 	private CapsuleCollider capsuleCollider;
 	private Rigidbody rigidBody;
 
 
 	void Awake () {
-		ThisPlayer = this.transform.gameObject;
 		capsuleCollider = this.GetComponent<CapsuleCollider> ();
 		rigidBody = this.GetComponent<Rigidbody> ();
 	}
@@ -70,8 +65,8 @@ public class characterController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		float translation = Input.GetAxis("Vertical") * speed;
-		float strafe = Input.GetAxis("Horizontal") * speed;
+		float translation = Input.GetAxis(verticalTag) * speed;
+		float strafe = Input.GetAxis(horizontalTag) * speed;
 		translation *= Time.deltaTime;
 		strafe *= Time.deltaTime;
 		transform.Translate (strafe, 0f, translation);
@@ -94,17 +89,17 @@ public class characterController : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 		//jump code
 
-		if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && !onGround && canDoubleJump) {
+		if (Input.GetButtonDown (jumpButtonTag) && !onGround && canDoubleJump) {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = false;
 		}
-		else if (Input.GetButtonDown (InputSettings.INPUT_JUMP) && onGround) {
+		else if (Input.GetButtonDown (jumpButtonTag) && onGround) {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = true;
 		}
 
 
-		if (Input.GetButtonDown(InputSettings.INPUT_FIRE)) {
+		if (Input.GetButtonDown(fireButtonTag)) {
 			if (!MouseDown) {
 				MouseDownFirstTime = Time.realtimeSinceStartup;
 			}
@@ -116,7 +111,7 @@ public class characterController : MonoBehaviour {
             // LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
 		}
 
-		if (Input.GetButtonUp(InputSettings.INPUT_FIRE)) {
+		if (Input.GetButtonUp(fireButtonTag)) {
 			MouseDown = false;
             LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
             isFiringAway = true;
