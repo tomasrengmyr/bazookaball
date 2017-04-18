@@ -26,9 +26,16 @@ public class camMouseLook : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// OBS pseduo code have no controller to test with.
-		var md = this.CompareTag (PLAYER_TWO) ? 
+		//Debug.Log(character.name);
+		/*var md = this.CompareTag (PLAYER_TWO) ? 
 			new Vector2 (Input.GetAxisRaw ("Joystick X"), Input.GetAxisRaw ("Joystick Y")) : 
 			new Vector2 (Input.GetAxisRaw ("Mouse X"), Input.GetAxisRaw ("Mouse Y"));
+		*/
+
+		var md = character.name == "Player2Char" ? 
+			new Vector2 (Input.GetAxisRaw ("Joystick X"), Input.GetAxisRaw ("Joystick Y")) : 
+			new Vector2 (Input.GetAxisRaw ("Mouse X"), Input.GetAxisRaw ("Mouse Y"));
+
 
 		md = Vector2.Scale (md, new Vector2 (sensitivity * smoothing, sensitivity * smoothing));
 		smoothV.x = Mathf.Lerp (smoothV.x, md.x, 1f / smoothing);

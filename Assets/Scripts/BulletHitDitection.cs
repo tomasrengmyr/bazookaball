@@ -7,6 +7,8 @@ public class BulletHitDitection : MonoBehaviour {
 	private Vector3 newPosition;
 	private Vector3 distance;
 
+	private float playerMultiplier;
+
 	//Explosion
 	public float radius = 5.0F;
 	public float power = 10.0F;
@@ -31,13 +33,17 @@ public class BulletHitDitection : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
+		playerMultiplier = characterController.instance.GetPower() * 10;
+		Debug.Log ("playerMultiplier!  " + playerMultiplier);
+
 		//Debug.Log ("collision ID: " + collision.gameObject.name);
 		foreach (ContactPoint contact in collision.contacts)
 		{
 			Debug.DrawRay(contact.point, contact.normal, Color.white);
 		}
 		if (collision.relativeVelocity.magnitude > 2) {
-			//Debug.Log ("POWER in bullet!  " + characterController.instance.GetLoadPower());
+			//Debug.Log ("POWER in bullet!  " + characterController.instance.GetPower());
+			//Debug.Log ("Player name:   " + characterController.instance.GetInstanceID());
 			//talk to global game manager
 			//MainGameManager.instance.AdjustScore (1);
 
@@ -48,12 +54,14 @@ public class BulletHitDitection : MonoBehaviour {
 			{
 				Rigidbody rb = hit.GetComponent<Rigidbody>();
 				if (rb != null)
-					rb.AddExplosionForce(power * characterController.instance.GetLoadPower(), explosionPos, radius, 3.0F);
-
+					//Debug.Log ("playerMultiplier!  " + playerMultiplier);
+					{
+					rb.AddExplosionForce(power * playerMultiplier, explosionPos, radius, 3.0F);
+				}
 			}
 			bulletRigidBody.isKinematic = true;
-			Explode();
-			//Destroy(gameObject);
+			//Explode();
+			Destroy(gameObject);
 		}
 			
 	}
@@ -62,7 +70,7 @@ public class BulletHitDitection : MonoBehaviour {
 		
 		var exp = GetComponent<ParticleSystem>();
 		exp.Play();
-		characterController.instance.SetLoadPower (0);
+		//characterController.instance.SetLoadPower (0);
 		Destroy(gameObject, exp.duration);
 	}
 }
