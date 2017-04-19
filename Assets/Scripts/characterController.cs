@@ -146,7 +146,16 @@ public class characterController : MonoBehaviour {
         Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
         Rigidbody Temporary_RigidBody;
         Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
-		Temporary_RigidBody.AddForce (Camera.main.transform.forward * Mathf.FloorToInt(force));
+		Debug.Log ("name: " + this.name);
+
+		//Check what player and camera to use
+
+		Camera cam = this.name == "Player2Char" ?
+			GameObject.FindWithTag ("PLAYER_TWO").GetComponent<Camera> () :
+			GameObject.FindWithTag ("PLAYER_ONE").GetComponent<Camera> ();
+
+
+		Temporary_RigidBody.AddForce (cam.transform.forward * Mathf.FloorToInt(force));
         Destroy (Temporary_Bullet_Handler, 10.0f);
     }
 
@@ -154,8 +163,8 @@ public class characterController : MonoBehaviour {
 		//PowerText.text = LoadPower.ToString ();
 	}
 
-	public float GetLoadPower(){
-		return LoadPower;
+	public float GetPower(){
+		return LoadTime;
 	}
 
 	public void SetLoadPower(float _loadPower){
