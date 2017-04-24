@@ -60,8 +60,8 @@ public class BulletHitDitection : MonoBehaviour {
 				}
 			}
 			bulletRigidBody.isKinematic = true;
-			//Explode();
-			Destroy(gameObject);
+			Explode();
+			//Destroy(gameObject);
 		}
 			
 	}
