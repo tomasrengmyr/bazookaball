@@ -14,6 +14,7 @@ public class BulletHitDitection : MonoBehaviour {
 	public float power = 10.0F;
 	// Use this for initialization
 	Rigidbody bulletRigidBody;
+	public GameObject particleSystemExplosion;
 
 	void Awake () {
 		bulletRigidBody = GetComponent<Rigidbody>();
@@ -36,41 +37,30 @@ public class BulletHitDitection : MonoBehaviour {
 		playerMultiplier = characterController.instance.GetPower() * 10;
 		Debug.Log ("playerMultiplier!  " + playerMultiplier);
 
-		//Debug.Log ("collision ID: " + collision.gameObject.name);
 		foreach (ContactPoint contact in collision.contacts)
 		{
 			Debug.DrawRay(contact.point, contact.normal, Color.white);
 		}
 		if (collision.relativeVelocity.magnitude > 2) {
-			//Debug.Log ("POWER in bullet!  " + characterController.instance.GetPower());
-			//Debug.Log ("Player name:   " + characterController.instance.GetInstanceID());
-			//talk to global game manager
-			//MainGameManager.instance.AdjustScore (1);
-
-
 			Vector3 explosionPos = transform.position;
 			Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
 			foreach (Collider hit in colliders)
 			{
 				Rigidbody rb = hit.GetComponent<Rigidbody>();
-				if (rb != null)
-					//Debug.Log ("playerMultiplier!  " + playerMultiplier);
-					{
+				if (rb != null) {
 					rb.AddExplosionForce(power * playerMultiplier, explosionPos, radius, 3.0F);
 				}
 			}
-			bulletRigidBody.isKinematic = true;
-			Explode();
-			//Destroy(gameObject);
-		}
-			
-	}
+			/*UnityStandardAssets.Effects.ExplosionPhysicsForce script = particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ExplosionPhysicsForce>();
+			script.explosionForce = power + 10;*/
+			UnityStandardAssets.Effects.ParticleSystemMultiplier multiplierScript = particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>();
+			Debug.Log ("playerMultiplier = " + playerMultiplier);
+			multiplierScript.multiplier = 0.1F + (playerMultiplier / 10);
 
-	void Explode() {
-		
-		var exp = GetComponent<ParticleSystem>();
-		exp.Play();
-		//characterController.instance.SetLoadPower (0);
-		Destroy(gameObject, exp.duration);
+			Instantiate (particleSystemExplosion, explosionPos, Quaternion.identity);
+			bulletRigidBody.isKinematic = true;
+
+		}
+		Destroy(gameObject);
 	}
 }
