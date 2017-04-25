@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class characterController : MonoBehaviour {
 	public static characterController instance;
@@ -23,6 +24,7 @@ public class characterController : MonoBehaviour {
 	public float jumpForce;
 
 	public string fireButtonTag;
+	public string escapeButtonTag;
 	public string jumpButtonTag;
 	public string horizontalTag;
 	public string verticalTag;
@@ -41,6 +43,9 @@ public class characterController : MonoBehaviour {
 	//public Text PowerText;
 	private CapsuleCollider capsuleCollider;
 	private Rigidbody rigidBody;
+
+	public GameObject gameMenu;
+	bool gameMenuVisible = false;
 
 
 	void Awake () {
@@ -136,6 +141,13 @@ public class characterController : MonoBehaviour {
 			MouseDown = false;
             LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
             isFiringAway = true;
+		}
+
+		if (Input.GetButtonDown (escapeButtonTag)) {
+			//SceneManager.LoadScene(0);
+			gameMenuVisible = !gameMenuVisible;
+			gameMenu.SetActive(gameMenuVisible);
+
 		}
 	}
 
