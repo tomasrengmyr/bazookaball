@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainGameManager : MonoBehaviour {
 	public static MainGameManager instance;
@@ -33,4 +34,9 @@ public class MainGameManager : MonoBehaviour {
 		GUI.Label (new Rect (10, 10, 100, 200), "Player 1 score= " + _Player1Score);
 		GUI.Label (new Rect (10, 50, 100, 200), "Player 2 score= " + _Player2Score);
 	}
+
+	public void resetGame(){
+		SceneManager.LoadScene (0);
+	}
+
 }
