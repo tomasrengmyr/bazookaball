@@ -20,7 +20,6 @@ public class BulletHitDitection : MonoBehaviour {
 		bulletRigidBody = GetComponent<Rigidbody>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		newPosition = this.transform.position;
 
@@ -28,14 +27,12 @@ public class BulletHitDitection : MonoBehaviour {
 			distance = newPosition - lastPosition;
 
 		}
-		//Debug.Log (distance.magnitude);
 		lastPosition = newPosition;
 	}
 
 	void OnCollisionEnter(Collision collision)
 	{
 		playerMultiplier = characterController.instance.GetPower() * 10;
-		Debug.Log ("playerMultiplier!  " + playerMultiplier);
 
 		foreach (ContactPoint contact in collision.contacts)
 		{
@@ -51,11 +48,8 @@ public class BulletHitDitection : MonoBehaviour {
 					rb.AddExplosionForce(power * playerMultiplier, explosionPos, radius, 3.0F);
 				}
 			}
-			/*UnityStandardAssets.Effects.ExplosionPhysicsForce script = particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ExplosionPhysicsForce>();
-			script.explosionForce = power + 10;*/
-			UnityStandardAssets.Effects.ParticleSystemMultiplier multiplierScript = particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>();
-			Debug.Log ("playerMultiplier = " + playerMultiplier);
-			multiplierScript.multiplier = 0.1F + (playerMultiplier / 10);
+
+			particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>().multiplier = 0.1F + (playerMultiplier / 10);
 
 			Instantiate (particleSystemExplosion, explosionPos, Quaternion.identity);
 			bulletRigidBody.isKinematic = true;

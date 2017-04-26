@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 30
   power: 100
-  particleSystemExplosion: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426,
+  particleSystemExplosion: {fileID: 100010, guid: 645413a00f7bd0242bbd6d0e5eb6f439,
     type: 2}
 --- !u!135 &135084175771469276
 SphereCollider:
