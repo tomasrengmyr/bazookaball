@@ -38,5 +38,4 @@ public class MainGameManager : MonoBehaviour {
 	public void resetGame(){
 		SceneManager.LoadScene (0);
 	}
-
 }
