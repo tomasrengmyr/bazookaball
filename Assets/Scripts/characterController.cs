@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class characterController : MonoBehaviour {
-	public static characterController instance;
 	//Explosion
 	public float radius = 5.0F;
 	public float power = 10.0F;
@@ -55,7 +54,6 @@ public class characterController : MonoBehaviour {
 
 	void Start () {
 		Cursor.lockState = CursorLockMode.Locked;
-		instance = this;
 		SetPowerText ();
 	}
 
@@ -155,7 +153,8 @@ public class characterController : MonoBehaviour {
     void Shoot (float force) {
         GameObject Temporary_Bullet_Handler;
         Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
-        Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
+		Temporary_Bullet_Handler.GetComponent<BulletHitDitection>().setPower(GetPower());
+		Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
         Rigidbody Temporary_RigidBody;
         Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
 		Debug.Log ("name: " + this.name);

@@ -15,6 +15,11 @@ public class BulletHitDitection : MonoBehaviour {
 	// Use this for initialization
 	Rigidbody bulletRigidBody;
 	public GameObject particleSystemExplosion;
+	private float loadedPower;
+
+	public void setPower(float power){
+		loadedPower = power;
+	}
 
 	void Awake () {
 		bulletRigidBody = GetComponent<Rigidbody>();
@@ -32,7 +37,7 @@ public class BulletHitDitection : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		playerMultiplier = characterController.instance.GetPower() * 10;
+		playerMultiplier = loadedPower * 10;//characterController.instance.GetPower() * 10;
 
 		foreach (ContactPoint contact in collision.contacts)
 		{
@@ -49,6 +54,7 @@ public class BulletHitDitection : MonoBehaviour {
 				}
 			}
 
+			//this code works after compilation, but we should probably do this another way in the future
 			particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>().multiplier = 0.1F + (playerMultiplier / 10);
 
 			Instantiate (particleSystemExplosion, explosionPos, Quaternion.identity);
