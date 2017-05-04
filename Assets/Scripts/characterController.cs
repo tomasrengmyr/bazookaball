@@ -65,18 +65,7 @@ public class characterController : MonoBehaviour {
             power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
             Shoot(power);
 		}
-	}
-    void OnGUI () {
-		var w = BazookBar.uvRect.width + 2;
-		Rect current = BazookBar.uvRect;
-		if (MouseDown) {
 
-		}
-
-    }
-
-	// Update is called once per frame
-	void Update () {
 		float translation = Input.GetAxis(verticalTag) * speed;
 		float strafe = Input.GetAxis(horizontalTag) * speed;
 		translation *= Time.deltaTime;
@@ -118,7 +107,7 @@ public class characterController : MonoBehaviour {
 			MouseDown = true;
 		}
 		if (MouseDown) {
-			
+
 			float currentProgress = ((Time.realtimeSinceStartup - MouseDownFirstTime) / Bullet_Max_Buffer_ms);
 			// TODO set these base position values from existing object position. 
 			float currentPosition = -260 + 170;
@@ -137,9 +126,22 @@ public class characterController : MonoBehaviour {
 				1);
 
 			MouseDown = false;
-            LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
-            isFiringAway = true;
+			LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
+			isFiringAway = true;
 		}
+	}
+    void OnGUI () {
+		var w = BazookBar.uvRect.width + 2;
+		Rect current = BazookBar.uvRect;
+		if (MouseDown) {
+
+		}
+
+    }
+
+	// Update is called once per frame
+	void Update () {
+		
 
 		if (Input.GetButtonDown (escapeButtonTag)) {
 			//SceneManager.LoadScene(0);
