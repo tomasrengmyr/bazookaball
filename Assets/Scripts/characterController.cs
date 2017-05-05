@@ -66,7 +66,13 @@ public class characterController : MonoBehaviour {
 		strafe *= Time.deltaTime;
 		transform.Translate (strafe, 0f, translation);
 
-
+		if (isFiringAway) {
+			isFiringAway = false;
+			float BufferedTime = (LoadTime > Bullet_Max_Buffer_ms ? Bullet_Max_Buffer_ms : LoadTime);
+			float power = (BufferedTime / Bullet_Max_Buffer_ms) * Bullet_Max_Force;
+			power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
+			Shoot(power);
+		}
 	}
 
     void OnGUI () {
@@ -89,13 +95,7 @@ public class characterController : MonoBehaviour {
 
 		}
 
-		if (isFiringAway) {
-			isFiringAway = false;
-			float BufferedTime = (LoadTime > Bullet_Max_Buffer_ms ? Bullet_Max_Buffer_ms : LoadTime);
-			float power = (BufferedTime / Bullet_Max_Buffer_ms) * Bullet_Max_Force;
-			power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
-			Shoot(power);
-		}
+
 
 		//Kolla så gubben är på marken så man kan hoppa igen
 		RaycastHit hit;
