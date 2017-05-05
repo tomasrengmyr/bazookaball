@@ -58,19 +58,44 @@ public class characterController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		if (isFiringAway) {
-            isFiringAway = false;
-            float BufferedTime = (LoadTime > Bullet_Max_Buffer_ms ? Bullet_Max_Buffer_ms : LoadTime);
-			float power = (BufferedTime / Bullet_Max_Buffer_ms) * Bullet_Max_Force;
-            power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
-            Shoot(power);
-		}
+		
 
 		float translation = Input.GetAxis(verticalTag) * speed;
 		float strafe = Input.GetAxis(horizontalTag) * speed;
 		translation *= Time.deltaTime;
 		strafe *= Time.deltaTime;
 		transform.Translate (strafe, 0f, translation);
+
+
+	}
+
+    void OnGUI () {
+		var w = BazookBar.uvRect.width + 2;
+		Rect current = BazookBar.uvRect;
+		if (MouseDown) {
+
+		}
+
+    }
+
+	// Update is called once per frame
+	void Update () {
+		
+
+		if (Input.GetButtonDown (escapeButtonTag)) {
+			//SceneManager.LoadScene(0);
+			gameMenuVisible = !gameMenuVisible;
+			gameMenu.SetActive(gameMenuVisible);
+
+		}
+
+		if (isFiringAway) {
+			isFiringAway = false;
+			float BufferedTime = (LoadTime > Bullet_Max_Buffer_ms ? Bullet_Max_Buffer_ms : LoadTime);
+			float power = (BufferedTime / Bullet_Max_Buffer_ms) * Bullet_Max_Force;
+			power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
+			Shoot(power);
+		}
 
 		//Kolla så gubben är på marken så man kan hoppa igen
 		RaycastHit hit;
@@ -128,26 +153,6 @@ public class characterController : MonoBehaviour {
 			MouseDown = false;
 			LoadTime = Time.realtimeSinceStartup - MouseDownFirstTime;
 			isFiringAway = true;
-		}
-	}
-    void OnGUI () {
-		var w = BazookBar.uvRect.width + 2;
-		Rect current = BazookBar.uvRect;
-		if (MouseDown) {
-
-		}
-
-    }
-
-	// Update is called once per frame
-	void Update () {
-		
-
-		if (Input.GetButtonDown (escapeButtonTag)) {
-			//SceneManager.LoadScene(0);
-			gameMenuVisible = !gameMenuVisible;
-			gameMenu.SetActive(gameMenuVisible);
-
 		}
 	}
 
