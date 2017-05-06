@@ -22,11 +22,17 @@ public class characterController : MonoBehaviour {
 	public float speed;
 	public float jumpForce;
 
-	public string fireButtonTag;
-	public string escapeButtonTag;
-	public string jumpButtonTag;
-	public string horizontalTag;
-	public string verticalTag;
+	private string fireButtonTag;
+	private string escapeButtonTag;
+	private string jumpButtonTag;
+	private string horizontalTag;
+	private string verticalTag;
+
+	public enum PlayerInputControl {
+		Keyboard = 0,
+		Joystick = 1
+	}
+	public PlayerInputControl playerInputControl;
 
 	bool onGround = true;
 	bool canDoubleJump = false;
@@ -53,12 +59,21 @@ public class characterController : MonoBehaviour {
 
 	}
 
+	private void setupPlayerControls () {
+		fireButtonTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_FIRE : InputSettings.P1_FIRE;
+		escapeButtonTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_CANCEL : InputSettings.P1_CANCEL;
+		jumpButtonTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_JUMP : InputSettings.P1_JUMP;
+		horizontalTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_HORIZONTAL : InputSettings.P1_HORIZONTAL;
+		verticalTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_VERTICAL : InputSettings.P1_VERTICAL;
+	}
+
 	void Start () {
 		Cursor.lockState = CursorLockMode.Locked;
 		SetPowerText ();
 		if (rigidBody != null) {
 			rigidBody.freezeRotation = true;
 		}
+		setupPlayerControls ();
 	}
 
 	void FixedUpdate () {
@@ -115,7 +130,7 @@ public class characterController : MonoBehaviour {
 			onGround = false;
 		}
 		//Debug.Log (onGround);
-		if(Input.GetButtonDown(InputSettings.INPUT_CANCEL))
+		if(Input.GetButtonDown(escapeButtonTag))
 			Cursor.lockState = CursorLockMode.None;
 		//jump code
 
