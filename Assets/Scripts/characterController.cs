@@ -22,11 +22,17 @@ public class characterController : MonoBehaviour {
 	public float speed;
 	public float jumpForce;
 
-	public string fireButtonTag;
-	public string escapeButtonTag;
-	public string jumpButtonTag;
-	public string horizontalTag;
-	public string verticalTag;
+	private string fireButtonTag;
+	private string escapeButtonTag;
+	private string jumpButtonTag;
+	private string horizontalTag;
+	private string verticalTag;
+
+	public enum PlayerInputControl {
+		Keyboard = 0,
+		Joystick = 1
+	}
+	public PlayerInputControl playerInputControl;
 
 	bool onGround = true;
 	bool canDoubleJump = false;
@@ -37,7 +43,6 @@ public class characterController : MonoBehaviour {
 	private float MouseDownFirstTime;
 
 	private float LoadTime = 0;
-	private float LoadPower = 0;
 
 	//public Text PowerText;
 	private CapsuleCollider capsuleCollider;
@@ -46,19 +51,25 @@ public class characterController : MonoBehaviour {
 	public GameObject gameMenu;
 	bool gameMenuVisible = false;
 
-
 	void Awake () {
 		capsuleCollider = this.GetComponent<CapsuleCollider> ();
 		rigidBody = this.GetComponent<Rigidbody> ();
+	}
 
+	private void setupPlayerControls () {
+		fireButtonTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_FIRE : InputSettings.P1_FIRE;
+		escapeButtonTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_CANCEL : InputSettings.P1_CANCEL;
+		jumpButtonTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_JUMP : InputSettings.P1_JUMP;
+		horizontalTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_HORIZONTAL : InputSettings.P1_HORIZONTAL;
+		verticalTag = playerInputControl == PlayerInputControl.Joystick ? InputSettings.P2_VERTICAL : InputSettings.P1_VERTICAL;
 	}
 
 	void Start () {
 		Cursor.lockState = CursorLockMode.Locked;
-		SetPowerText ();
 		if (rigidBody != null) {
 			rigidBody.freezeRotation = true;
 		}
+		setupPlayerControls ();
 	}
 
 	void FixedUpdate () {
@@ -80,26 +91,18 @@ public class characterController : MonoBehaviour {
 	}
 
     void OnGUI () {
-		var w = BazookBar.uvRect.width + 2;
 		Rect current = BazookBar.uvRect;
-		if (MouseDown) {
-
-		}
-
     }
 
 	// Update is called once per frame
 	void Update () {
 		
-
 		if (Input.GetButtonDown (escapeButtonTag)) {
 			//SceneManager.LoadScene(0);
 			gameMenuVisible = !gameMenuVisible;
 			gameMenu.SetActive(gameMenuVisible);
 
 		}
-
-
 
 		//Kolla så gubben är på marken så man kan hoppa igen
 		RaycastHit hit;
@@ -114,11 +117,10 @@ public class characterController : MonoBehaviour {
 		} else {
 			onGround = false;
 		}
-		//Debug.Log (onGround);
-		if(Input.GetButtonDown(InputSettings.INPUT_CANCEL))
-			Cursor.lockState = CursorLockMode.None;
-		//jump code
 
+		if(Input.GetButtonDown(escapeButtonTag))
+			Cursor.lockState = CursorLockMode.None;
+		
 		if (Input.GetButtonDown (jumpButtonTag) && !onGround && canDoubleJump) {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = false;
@@ -127,7 +129,6 @@ public class characterController : MonoBehaviour {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = true;
 		}
-
 
 		if (Input.GetButtonDown(fireButtonTag)) {
 			if (!MouseDown) {
@@ -168,7 +169,6 @@ public class characterController : MonoBehaviour {
 		Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
         Rigidbody Temporary_RigidBody;
         Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
-		Debug.Log ("name: " + this.name);
 
 		//Check what player and camera to use
 
@@ -181,16 +181,8 @@ public class characterController : MonoBehaviour {
         Destroy (Temporary_Bullet_Handler, 10.0f);
     }
 
-	void SetPowerText(){
-		//PowerText.text = LoadPower.ToString ();
-	}
-
 	public float GetPower(){
 		return LoadTime;
-	}
-
-	public void SetLoadPower(float _loadPower){
-		LoadPower = _loadPower;
 	}
 
 }
