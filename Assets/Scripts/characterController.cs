@@ -50,11 +50,15 @@ public class characterController : MonoBehaviour {
 	void Awake () {
 		capsuleCollider = this.GetComponent<CapsuleCollider> ();
 		rigidBody = this.GetComponent<Rigidbody> ();
+
 	}
 
 	void Start () {
 		Cursor.lockState = CursorLockMode.Locked;
 		SetPowerText ();
+		if (rigidBody != null) {
+			rigidBody.freezeRotation = true;
+		}
 	}
 
 	void FixedUpdate () {
