@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5400000}
   - component: {fileID: 8200000}
   - component: {fileID: 114385460716132390}
+  - component: {fileID: 114754959273824554}
   m_Layer: 0
   m_Name: FPSController
   m_TagString: Untagged
@@ -443,6 +444,21 @@ MonoBehaviour:
     i15: 192
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114754959273824554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f3bbab52b4a644cd96221361283c091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentsToDisable:
+  - {fileID: 11400000}
+  - {fileID: 8100000}
+  - {fileID: 2000000}
 --- !u!136 &136995503357145640
 CapsuleCollider:
   m_ObjectHideFlags: 1
