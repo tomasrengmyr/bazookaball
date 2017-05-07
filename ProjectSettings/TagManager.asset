@@ -9,6 +9,7 @@ TagManager:
   - Goal2
   - PLAYER_TWO
   - PLAYER_ONE
+  - SceneCamera
   layers:
   - Default
   - TransparentFX
