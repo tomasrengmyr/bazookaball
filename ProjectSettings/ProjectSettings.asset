@@ -596,7 +596,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 2
   cloudProjectId: b82a02ce-05f0-402b-bf03-2409c75d6e3a
-  projectName: Roll a ball
+  projectName: Bazookaball
   organizationId: rengmyr
   cloudEnabled: 0
   enableNewInputSystem: 0
