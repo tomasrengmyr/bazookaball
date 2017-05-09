@@ -51,9 +51,12 @@ public class characterController : MonoBehaviour {
 	public GameObject gameMenu;
 	bool gameMenuVisible = false;
 
+	public Camera playerCamera;
+
 	void Awake () {
 		capsuleCollider = this.GetComponent<CapsuleCollider> ();
 		rigidBody = this.GetComponent<Rigidbody> ();
+
 	}
 
 	private void setupPlayerControls () {
@@ -170,14 +173,7 @@ public class characterController : MonoBehaviour {
         Rigidbody Temporary_RigidBody;
         Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
 
-		//Check what player and camera to use
-
-		Camera cam = this.name == "Player2Char" ?
-			GameObject.FindWithTag ("PLAYER_TWO").GetComponent<Camera> () :
-			GameObject.FindWithTag ("PLAYER_ONE").GetComponent<Camera> ();
-
-
-		Temporary_RigidBody.AddForce (cam.transform.forward * Mathf.FloorToInt(force));
+		Temporary_RigidBody.AddForce (playerCamera.transform.forward * Mathf.FloorToInt(force));
         Destroy (Temporary_Bullet_Handler, 10.0f);
     }
 

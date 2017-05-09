@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 114367611551714712}
   m_Layer: 0
   m_Name: PlayerCamera
-  m_TagString: PLAYER_ONE
+  m_TagString: PlayerCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1638,6 +1638,7 @@ MonoBehaviour:
   jumpForce: 300
   playerInputControl: 0
   gameMenu: {fileID: 1826503539638382}
+  playerCamera: {fileID: 20106910381559816}
 --- !u!114 &114207096895168284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1828,6 +1829,8 @@ MonoBehaviour:
   - {fileID: 114183580353224216}
   - {fileID: 20106910381559816}
   - {fileID: 114367611551714712}
+  - {fileID: 20106910381559816}
+  - {fileID: 0}
 --- !u!114 &114343032068964960
 MonoBehaviour:
   m_ObjectHideFlags: 1
