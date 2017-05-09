@@ -14,9 +14,6 @@ public class characterController : MonoBehaviour {
 	public int Bullet_Min_Force = 1000;
     public float Bullet_Max_Buffer_ms = 2.5f;
 
-	//Shoot code
-	public GameObject Bullet_Emitter;
-	public GameObject Bullet;
     public RawImage BazookBar;
 
 	public float speed;
@@ -52,6 +49,8 @@ public class characterController : MonoBehaviour {
 	bool gameMenuVisible = false;
 
 	public Camera playerCamera;
+
+	public BulletController bulletController;
 
 	void Awake () {
 		capsuleCollider = this.GetComponent<CapsuleCollider> ();
@@ -89,7 +88,8 @@ public class characterController : MonoBehaviour {
 			float BufferedTime = (LoadTime > Bullet_Max_Buffer_ms ? Bullet_Max_Buffer_ms : LoadTime);
 			float power = (BufferedTime / Bullet_Max_Buffer_ms) * Bullet_Max_Force;
 			power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
-			Shoot(power);
+			//Shoot(power);
+			bulletController.CmdShoot (power, GetPower ());
 		}
 	}
 
@@ -165,17 +165,7 @@ public class characterController : MonoBehaviour {
 	}
 
 
-    void Shoot (float force) {
-        GameObject Temporary_Bullet_Handler;
-        Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
-		Temporary_Bullet_Handler.GetComponent<BulletHitDitection>().setPower(GetPower());
-		Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
-        Rigidbody Temporary_RigidBody;
-        Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
-
-		Temporary_RigidBody.AddForce (playerCamera.transform.forward * Mathf.FloorToInt(force));
-        Destroy (Temporary_Bullet_Handler, 10.0f);
-    }
+    
 
 	public float GetPower(){
 		return LoadTime;
