@@ -8,7 +8,6 @@ using UnityEngine.Networking;
 public class BulletController : NetworkBehaviour {
 
 	[SerializeField]
-	public Camera playerCamera;
 	public GameObject Bullet;
 	public GameObject Bullet_Emitter;
 
@@ -23,7 +22,7 @@ public class BulletController : NetworkBehaviour {
 	}
 
 	[Command]
-	public void CmdShoot (float force, float power) {
+	public void CmdShoot (float force, float power, Vector3 direction) {
 		//GameObject Temporary_Bullet_Handler;
 		GameObject Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
 		Temporary_Bullet_Handler.GetComponent<BulletHitDitection>().setPower(power);
@@ -31,7 +30,7 @@ public class BulletController : NetworkBehaviour {
 		Rigidbody Temporary_RigidBody;
 		Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
 
-		Temporary_RigidBody.AddForce (playerCamera.transform.forward * Mathf.FloorToInt(force));
+		Temporary_RigidBody.AddForce (direction * Mathf.FloorToInt(force));
 		NetworkServer.Spawn (Temporary_Bullet_Handler);
 
 		//this only destroys locally, need to use NetworkServer.Destroy 

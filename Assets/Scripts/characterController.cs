@@ -89,7 +89,7 @@ public class characterController : MonoBehaviour {
 			float power = (BufferedTime / Bullet_Max_Buffer_ms) * Bullet_Max_Force;
 			power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
 			//Shoot(power);
-			bulletController.CmdShoot (power, GetPower ());
+			bulletController.CmdShoot (power, GetPower (), playerCamera.transform.forward);
 		}
 	}
 
