@@ -11,31 +11,13 @@ public class BulletController : NetworkBehaviour {
 	public GameObject Bullet;
 	public GameObject Bullet_Emitter;
 
-	// Use this for initialization
-	void Start () {
-		Debug.Log ("BulletController start");
-	}
-	
-	// this update should be a serverupdate and handle the bullets lifetime
-	void Update () {
-		
-	}
-
 	[Command]
 	public void CmdShoot (float force, float power, Vector3 direction) {
-		//GameObject Temporary_Bullet_Handler;
 		GameObject Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
 		Temporary_Bullet_Handler.GetComponent<BulletHitDitection>().setPower(power);
 		Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
-		Rigidbody Temporary_RigidBody;
-		Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody> ();
 
-		Temporary_RigidBody.AddForce (direction * Mathf.FloorToInt(force));
 		NetworkServer.Spawn (Temporary_Bullet_Handler);
-
-		//this only destroys locally, need to use NetworkServer.Destroy 
-		Destroy (Temporary_Bullet_Handler, 10.0f);
-
-
+		Temporary_Bullet_Handler.GetComponent<Rigidbody> ().AddForce (direction * Mathf.FloorToInt(force));
 	}
 }

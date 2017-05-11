@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BulletHitDitection : MonoBehaviour {
+public class BulletHitDitection : NetworkBehaviour {
 	private Vector3 lastPosition;
 	private Vector3 newPosition;
 	private Vector3 distance;
@@ -17,50 +18,59 @@ public class BulletHitDitection : MonoBehaviour {
 	public GameObject particleSystemExplosion;
 	private float loadedPower;
 
+	float age;
+	float shellLifeTime = 2f;
+	bool isAlive = true;
+
+	MeshRenderer mesh;
+
 	public void setPower(float power){
 		loadedPower = power;
 	}
 
-	void Awake () {
+	void Start () {
 		bulletRigidBody = GetComponent<Rigidbody>();
+		mesh = gameObject.GetComponent<MeshRenderer> ();
 	}
-	
+
+	[ServerCallback]
 	void Update () {
-		newPosition = this.transform.position;
-
-		if(lastPosition != null){
-			distance = newPosition - lastPosition;
-
+		
+		age += Time.deltaTime;
+			if(age > shellLifeTime){
+			NetworkServer.Destroy (gameObject);
 		}
-		lastPosition = newPosition;
+		if(!isAlive && !isClient){
+			NetworkServer.Destroy (gameObject);
+		}
+
 	}
 
-	void OnCollisionEnter(Collision collision)
-	{
-		playerMultiplier = loadedPower * 10;//characterController.instance.GetPower() * 10;
-
-		foreach (ContactPoint contact in collision.contacts)
-		{
-			Debug.DrawRay(contact.point, contact.normal, Color.white);
+	void OnCollisionEnter(Collision collision){
+		if(!isAlive){
+			return;
 		}
-		if (collision.relativeVelocity.magnitude > 2) {
-			Vector3 explosionPos = transform.position;
-			Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
-			foreach (Collider hit in colliders)
-			{
-				Rigidbody rb = hit.GetComponent<Rigidbody>();
-				if (rb != null) {
-					rb.AddExplosionForce(power * playerMultiplier, explosionPos, radius, 3.0F);
-				}
-			}
+		isAlive = false;
+		if(isClient){
+			mesh.enabled = false;
+		}
 
-			//this code works after compilation, but we should probably do this another way in the future
-			particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>().multiplier = 0.1F + (playerMultiplier / 10);
+		Vector3 explosionPos = transform.position;
+		Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+
+		foreach (Collider hit in colliders) {
+			Rigidbody rb = hit.GetComponent<Rigidbody>();
+			if (rb != null) {
+				rb.AddExplosionForce(power * playerMultiplier, explosionPos, radius, 3.0F);
+			}
+		}
+		//this code works after compilation, but we should probably do this another way in the future
+		/*particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>().multiplier = 0.1F + (playerMultiplier / 10);
 
 			Instantiate (particleSystemExplosion, explosionPos, Quaternion.identity);
 			bulletRigidBody.isKinematic = true;
+			*/
 
-		}
-		Destroy(gameObject);
+
 	}
 }
