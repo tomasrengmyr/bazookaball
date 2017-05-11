@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
-public class MainGameManager : MonoBehaviour {
+public class MainGameManager : NetworkBehaviour {
 	public static MainGameManager instance;
+	public GameObject BallPrefab;
 	private int _Player1Score;
 	private int _Player2Score;
 
+
+	void Start () {
+		if (isServer) {
+			CmdAddBall();
+		}
+	}
 	void Awake (){
 		instance = this;
 	}
@@ -37,5 +45,13 @@ public class MainGameManager : MonoBehaviour {
 
 	public void resetGame(){
 		SceneManager.LoadScene (0);
+	}
+	[Command]
+	void CmdAddBall() {
+		var ball = (GameObject)Instantiate(
+			BallPrefab,
+			new Vector3(0, 4, 0),
+			new Quaternion(0, 1, 0, 0));
+		NetworkServer.Spawn (ball);
 	}
 }
