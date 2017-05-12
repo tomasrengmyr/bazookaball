@@ -56,11 +56,12 @@ public class BulletHitDitection : NetworkBehaviour {
 		}
 		shellLifeTime = 0.4f;
 		//this code works after compilation, but we should probably do this another way in the future
-		/*particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>().multiplier = 0.1F + (playerMultiplier / 10);
+		particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>().multiplier = 0.1F + (playerMultiplier / 10);
 
-			Instantiate (particleSystemExplosion, explosionPos, Quaternion.identity);
-			bulletRigidBody.isKinematic = true;
-			*/
+		GameObject explosion = Instantiate (particleSystemExplosion, explosionPos, Quaternion.identity) as GameObject;
+		NetworkServer.Spawn (explosion);	
+		//bulletRigidBody.isKinematic = true;
+			
 
 
 	}
