@@ -30,11 +30,14 @@ public class BulletHitDitection : NetworkBehaviour {
 		bulletRigidBody = GetComponent<Rigidbody>();
 	}
 
+	private GameObject explosion;
+
 	[ServerCallback]
 	void Update () {
 		
 		age += Time.deltaTime;
 			if(age > shellLifeTime){
+			NetworkServer.Spawn (explosion);	
 			NetworkServer.Destroy (gameObject);
 		}
 
@@ -58,9 +61,7 @@ public class BulletHitDitection : NetworkBehaviour {
 		//this code works after compilation, but we should probably do this another way in the future
 		particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>().multiplier = 0.1F + (playerMultiplier / 10);
 
-		GameObject explosion = Instantiate (particleSystemExplosion, explosionPos, Quaternion.identity) as GameObject;
-		NetworkServer.Spawn (explosion);	
-		//bulletRigidBody.isKinematic = true;
+		explosion = Instantiate (particleSystemExplosion, explosionPos, Quaternion.identity) as GameObject;
 			
 
 
