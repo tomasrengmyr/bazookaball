@@ -22,15 +22,12 @@ public class BulletHitDitection : NetworkBehaviour {
 	float shellLifeTime = 2f;
 	bool isAlive = true;
 
-	MeshRenderer mesh;
-
 	public void setPower(float power){
 		loadedPower = power;
 	}
 
 	void Start () {
 		bulletRigidBody = GetComponent<Rigidbody>();
-		mesh = gameObject.GetComponent<MeshRenderer> ();
 	}
 
 	[ServerCallback]
@@ -38,9 +35,6 @@ public class BulletHitDitection : NetworkBehaviour {
 		
 		age += Time.deltaTime;
 			if(age > shellLifeTime){
-			NetworkServer.Destroy (gameObject);
-		}
-		if(!isAlive && !isClient){
 			NetworkServer.Destroy (gameObject);
 		}
 
@@ -51,10 +45,6 @@ public class BulletHitDitection : NetworkBehaviour {
 			return;
 		}
 		isAlive = false;
-		if(isClient){
-			mesh.enabled = false;
-		}
-
 		Vector3 explosionPos = transform.position;
 		Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
 
@@ -64,6 +54,7 @@ public class BulletHitDitection : NetworkBehaviour {
 				rb.AddExplosionForce(power * playerMultiplier, explosionPos, radius, 3.0F);
 			}
 		}
+		shellLifeTime = 0.4f;
 		//this code works after compilation, but we should probably do this another way in the future
 		/*particleSystemExplosion.GetComponent<UnityStandardAssets.Effects.ParticleSystemMultiplier>().multiplier = 0.1F + (playerMultiplier / 10);
 
