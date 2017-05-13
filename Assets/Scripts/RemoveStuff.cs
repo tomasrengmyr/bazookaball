@@ -24,6 +24,8 @@ public class RemoveStuff : NetworkBehaviour {
 	}
 	
 	void OnDisable(){
-		sceneCamera.gameObject.SetActive(true);
+		if (sceneCamera) {
+			sceneCamera.gameObject.SetActive(true);
+		}
 	}
 }
