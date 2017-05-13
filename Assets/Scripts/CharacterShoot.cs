@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 
 //this class should probably handle more of the shooting code 
-public class BulletController : NetworkBehaviour {
+public class CharacterShoot : NetworkBehaviour {
 
 	[SerializeField]
 	public GameObject Bullet;

@@ -50,7 +50,7 @@ public class characterController : MonoBehaviour {
 
 	public Camera playerCamera;
 
-	public BulletController bulletController;
+	public CharacterShoot characterShoot;
 
 	void Awake () {
 		capsuleCollider = this.GetComponent<CapsuleCollider> ();
@@ -87,7 +87,7 @@ public class characterController : MonoBehaviour {
 			isFiringAway = false;
 			float force = GetValueFromLoadTime(Bullet_Min_Force, Bullet_Max_Force);
 			float explosionPower = GetValueFromLoadTime(1.0F, 5.0F);
-			bulletController.CmdShoot (force, explosionPower, playerCamera.transform.forward);
+			characterShoot.CmdShoot (force, explosionPower, playerCamera.transform.forward);
 		}
 	}
 	float GetValueFromLoadTime(float MinValue, float MaxValue) {
