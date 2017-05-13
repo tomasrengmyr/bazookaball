@@ -12,9 +12,9 @@ public class BulletController : NetworkBehaviour {
 	public GameObject Bullet_Emitter;
 
 	[Command]
-	public void CmdShoot (float force, float power, Vector3 direction) {
+	public void CmdShoot (float force, float explosionPower, Vector3 direction) {
 		GameObject Temporary_Bullet_Handler = Instantiate (Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
-		Temporary_Bullet_Handler.GetComponent<BulletHitDitection>().setPower(power);
+		Temporary_Bullet_Handler.GetComponent<BulletHitDitection>().SetExplosionsPower(explosionPower);
 		Temporary_Bullet_Handler.transform.Rotate (Vector3.left * 90);
 
 		NetworkServer.Spawn (Temporary_Bullet_Handler);

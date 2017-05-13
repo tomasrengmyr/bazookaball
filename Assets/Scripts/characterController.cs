@@ -85,12 +85,15 @@ public class characterController : MonoBehaviour {
 
 		if (isFiringAway) {
 			isFiringAway = false;
-			float BufferedTime = (LoadTime > Bullet_Max_Buffer_ms ? Bullet_Max_Buffer_ms : LoadTime);
-			float power = (BufferedTime / Bullet_Max_Buffer_ms) * Bullet_Max_Force;
-			power =  power < Bullet_Min_Force ? Bullet_Min_Force : power;
-			//Shoot(power);
-			bulletController.CmdShoot (power, GetPower (), playerCamera.transform.forward);
+			float force = GetValueFromLoadTime(Bullet_Min_Force, Bullet_Max_Force);
+			float explosionPower = GetValueFromLoadTime(1.0F, 5.0F);
+			bulletController.CmdShoot (force, explosionPower, playerCamera.transform.forward);
 		}
+	}
+	float GetValueFromLoadTime(float MinValue, float MaxValue) {
+		float BufferedTime = (LoadTime > Bullet_Max_Buffer_ms ? Bullet_Max_Buffer_ms : LoadTime);
+		float value = (BufferedTime / Bullet_Max_Buffer_ms) * MaxValue;
+		return value < MinValue ? MinValue : value;
 	}
 
     void OnGUI () {
@@ -163,12 +166,4 @@ public class characterController : MonoBehaviour {
 			isFiringAway = true;
 		}
 	}
-
-
-    
-
-	public float GetPower(){
-		return LoadTime;
-	}
-
 }

@@ -8,26 +8,21 @@ public class BulletHitDitection : NetworkBehaviour {
 	private Vector3 newPosition;
 	private Vector3 distance;
 
-	private float playerMultiplier;
+	private float playerMultiplier = 10.0F;
 
 	//Explosion
 	public float radius = 5.0F;
 	public float power = 10.0F;
 	// Use this for initialization
-	Rigidbody bulletRigidBody;
 	public GameObject particleSystemExplosion;
-	private float loadedPower;
+	
 
 	float age;
 	float shellLifeTime = 2f;
 	bool isAlive = true;
 
-	public void setPower(float power){
-		loadedPower = power;
-	}
-
-	void Start () {
-		bulletRigidBody = GetComponent<Rigidbody>();
+	public void SetExplosionsPower (float power) {
+		playerMultiplier = power;
 	}
 
 	private GameObject explosion;
