@@ -75,8 +75,6 @@ public class characterController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		
-
 		float translation = Input.GetAxis(verticalTag) * speed;
 		float strafe = Input.GetAxis(horizontalTag) * speed;
 		translation *= Time.deltaTime;
@@ -111,6 +109,7 @@ public class characterController : MonoBehaviour {
 		}
 
 		//Kolla så gubben är på marken så man kan hoppa igen
+		// TODO: Clean up
 		RaycastHit hit;
 
 		Vector3 physicsCenter = this.transform.position + capsuleCollider.center;
@@ -135,7 +134,10 @@ public class characterController : MonoBehaviour {
 			rigidBody.AddForce (Vector3.up * jumpForce);
 			canDoubleJump = true;
 		}
+		HandleFireButton();	
+	}
 
+	void HandleFireButton () {
 		if (Input.GetButtonDown(fireButtonTag)) {
 			if (!MouseDown) {
 				MouseDownFirstTime = Time.realtimeSinceStartup;
