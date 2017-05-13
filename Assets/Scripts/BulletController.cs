@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class BulletHitDitection : NetworkBehaviour {
-	private Vector3 lastPosition;
-	private Vector3 newPosition;
-	private Vector3 distance;
+public class BulletController : NetworkBehaviour {
 
 	private float playerMultiplier = 10.0F;
+	private GameObject explosion;
 
 	//Explosion
 	public float radius = 5.0F;
@@ -24,8 +22,6 @@ public class BulletHitDitection : NetworkBehaviour {
 	public void SetExplosionsPower (float power) {
 		playerMultiplier = power;
 	}
-
-	private GameObject explosion;
 
 	[ServerCallback]
 	void Update () {
