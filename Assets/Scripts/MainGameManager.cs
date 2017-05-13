@@ -7,7 +7,9 @@ using UnityEngine.Networking;
 public class MainGameManager : NetworkBehaviour {
 	public static MainGameManager instance;
 	public GameObject BallPrefab;
+	[SyncVar]
 	private int _Player1Score;
+	[SyncVar]
 	private int _Player2Score;
 
 
