@@ -1135,7 +1135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1298047161
 Transform:
   m_ObjectHideFlags: 0
@@ -1314,7 +1314,6 @@ GameObject:
   - component: {fileID: 1318170675}
   - component: {fileID: 1318170674}
   - component: {fileID: 1318170673}
-  - component: {fileID: 1318170672}
   m_Layer: 0
   m_Name: Goalpost 1
   m_TagString: Untagged
@@ -1335,20 +1334,6 @@ Transform:
   m_Father: {fileID: 1312564883}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1318170672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1318170670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 804387809ad5149d68691d904d2b7ad1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 5
-  power: 10
-  particleSystemExplosion: {fileID: 0}
 --- !u!23 &1318170673
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1401,6 +1386,43 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1318170670}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1326299877 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1902336787910758, guid: 2b3464138c00e43268a6114b607f4f02,
+    type: 2}
+  m_PrefabInternal: {fileID: 1657822668}
+--- !u!114 &1326299878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1326299877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 43
+    i1: 52
+    i2: 100
+    i3: 19
+    i4: 140
+    i5: 0
+    i6: 228
+    i7: 50
+    i8: 104
+    i9: 166
+    i10: 17
+    i11: 75
+    i12: 96
+    i13: 127
+    i14: 79
+    i15: 2
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &1351839331
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,7 +1847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1618039911
 Transform:
   m_ObjectHideFlags: 0
@@ -1934,7 +1956,6 @@ GameObject:
   - component: {fileID: 1707092834}
   - component: {fileID: 1707092833}
   - component: {fileID: 1707092832}
-  - component: {fileID: 1707092836}
   m_Layer: 0
   m_Name: Goalpost 1
   m_TagString: Untagged
@@ -2007,20 +2028,43 @@ Transform:
   m_Father: {fileID: 660070061}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1707092836
+--- !u!1 &1808023071 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1902336787910758, guid: 2b3464138c00e43268a6114b607f4f02,
+    type: 2}
+  m_PrefabInternal: {fileID: 1312564882}
+--- !u!114 &1808023072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1707092831}
+  m_GameObject: {fileID: 1808023071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 804387809ad5149d68691d904d2b7ad1, type: 3}
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 5
-  power: 10
-  particleSystemExplosion: {fileID: 0}
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1001 &1890186460
 Prefab:
   m_ObjectHideFlags: 0
