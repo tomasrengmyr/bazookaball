@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class goal : MonoBehaviour {
+public class goal : NetworkBehaviour {
 
 /*
  * GOAL_ONE_TAG should be set on all goals that the player1 protects and GOAL_TWO_TAG on all goals playerone wants to hit
@@ -11,6 +12,9 @@ public class goal : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) 
 	{
+		if (!isServer) {
+			return;
+		}
 		if (other.gameObject.CompareTag ("Ball")) {
 			Debug.Log ("GOAL");
 			//other.gameObject.SetActive (false);
